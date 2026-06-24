@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kauã Silva Santos — Automação & Dados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0A0A0F; --bg-card: #111118; --accent: #00E5A0;
+      --accent-glow: rgba(0,229,160,0.12); --text: #E2E8F0;
+      --muted: #6B7280; --border: rgba(255,255,255,0.07);
+      --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(10,10,15,0.88); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--mono); font-size: .85rem; color: var(--accent); letter-spacing: .05em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: .82rem; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: .04em; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(0,229,160,0.06) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,229,160,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+      background-size: 40px 40px; pointer-events: none;
+    }
+    .hero-inner { max-width: 880px; width: 100%; position: relative; z-index: 1; }
+    .eyebrow {
+      font-family: var(--mono); font-size: .76rem; color: var(--accent);
+      letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .eyebrow::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--accent); }
+    h1 { font-family: var(--mono); font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; margin-bottom: .75rem; }
+    h1 span { color: var(--accent); }
+    .hero-sub { font-size: 1rem; color: var(--muted); max-width: 520px; margin-bottom: 2.5rem; line-height: 1.75; }
+
+    .terminal { background: #0D0D14; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-width: 520px; margin-bottom: 2.5rem; box-shadow: 0 0 40px rgba(0,229,160,0.07); }
+    .t-bar { background: #161620; padding: .55rem 1rem; display: flex; align-items: center; gap: .5rem; border-bottom: 1px solid var(--border); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #FF5F57; } .dot-y { background: #FFBD2E; } .dot-g { background: #28CA41; }
+    .t-title { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin: 0 auto; }
+    .t-body { padding: 1.1rem 1.25rem; font-family: var(--mono); font-size: .82rem; line-height: 2; }
+    .tp { color: var(--accent); } .tc { color: #CBD5E0; } .to { color: #718096; } .tv { color: #F6AD55; }
+    .cursor { display: inline-block; width: 8px; height: 1em; background: var(--accent); vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.5rem; border-radius: 6px; font-size: .85rem; font-weight: 600; text-decoration: none; transition: all .2s; letter-spacing: .03em; }
+    .btn-p { background: var(--accent); color: #0A0A0F; }
+    .btn-p:hover { background: #00ffb2; box-shadow: 0 0 24px rgba(0,229,160,0.4); }
+    .btn-g { border: 1px solid var(--border); color: var(--muted); }
+    .btn-g:hover { border-color: var(--accent); color: var(--accent); }
+
+    section { padding: 5rem 2rem; }
+    .container { max-width: 940px; margin: 0 auto; }
+    .s-label { font-family: var(--mono); font-size: .72rem; color: var(--accent); letter-spacing: .14em; text-transform: uppercase; margin-bottom: .6rem; display: flex; align-items: center; gap: .6rem; }
+    .s-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+    h2 { font-family: var(--mono); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: 2.5rem; letter-spacing: -.02em; }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.75rem; transition: border-color .2s, transform .2s, box-shadow .2s; position: relative; overflow: hidden; text-decoration: none; color: inherit; display: block; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+    .card:hover { border-color: rgba(0,229,160,0.25); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+    .card:hover::before { transform: scaleX(1); }
+    .card-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+    .card h3 { font-family: var(--mono); font-size: 1rem; font-weight: 600; margin-bottom: .5rem; line-height: 1.3; }
+    .card-desc { font-size: .84rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.1rem; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.25rem; }
+    .tag { font-family: var(--mono); font-size: .68rem; padding: .25rem .6rem; border-radius: 4px; background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--border); }
+    .card-link { font-family: var(--mono); font-size: .76rem; color: var(--accent); display: flex; align-items: center; gap: .4rem; }
+    .card-link::after { content: '→'; transition: transform .2s; }
+    .card:hover .card-link::after { transform: translateX(4px); }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .sg { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem; }
+    .sg-title { font-family: var(--mono); font-size: .72rem; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .9rem; }
+    .sg-list { display: flex; flex-direction: column; gap: .45rem; }
+    .sg-item { font-size: .82rem; color: var(--muted); display: flex; align-items: center; gap: .5rem; }
+    .sg-item::before { content: '▸'; color: var(--accent); font-size: .68rem; flex-shrink: 0; }
+
+    #contact { text-align: center; }
+    .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+
+    footer { text-align: center; padding: 2rem; font-family: var(--mono); font-size: .72rem; color: var(--muted); border-top: 1px solid var(--border); }
+
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      section { padding: 3.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">kauã.dev</span>
+  <ul class="nav-links">
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contato</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">Disponível para oportunidades</p>
+    <h1>Automação &<br/><span>Dados</span> que<br/>geram resultado.</h1>
+    <p class="hero-sub">Analista que transforma processos manuais em fluxos automatizados — de extensões Chrome a agentes de IA, com Python, JavaScript e SQL.</p>
+
+    <div class="terminal">
+      <div class="t-bar">
+        <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <span class="t-title">kaua@z4auto ~ stack.sh</span>
+      </div>
+      <div class="t-body">
+        <div><span class="tp">❯ </span><span class="tc">whoami</span></div>
+        <div id="l1" style="opacity:0"><span class="to">Kauã Silva Santos — Automação & Dados · Z4 Auto</span></div>
+        <div id="l2" style="opacity:0"><span class="tp">❯ </span><span class="tc">cat stack.json</span></div>
+        <div id="l3" style="opacity:0"><span class="to">{ </span><span class="tv">"python"</span><span class="to">: "pandas · openpyxl · Tkinter · OAuth2",</span></div>
+        <div id="l4" style="opacity:0"><span class="to">&nbsp;&nbsp;</span><span class="tv">"js"</span><span class="to">: "Chrome MV3 · React · TypeScript",</span></div>
+        <div id="l5" style="opacity:0"><span class="to">&nbsp;&nbsp;</span><span class="tv">"data"</span><span class="to">: "SQL · Looker Studio · Firestore",</span></div>
+        <div id="l6" style="opacity:0"><span class="to">&nbsp;&nbsp;</span><span class="tv">"ai"</span><span class="to">: "Claude AI · Gemini · Anthropic API" }</span></div>
+        <div id="l7" style="opacity:0"><span class="tp">❯ </span><span class="cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <a href="#projetos" class="btn btn-p">Ver projetos →</a>
+      <a href="mailto:kauasantoscontact@gmail.com" class="btn btn-g">kauasantoscontact@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<section id="projetos">
+  <div class="container">
+    <p class="s-label">Projetos</p>
+    <h2>Construído para produção.</h2>
+    <div class="projects-grid">
+
+      <a href="https://github.com/kauasilvadsantos/agente-mediacoes-z4auto" target="_blank" class="card fade-in">
+        <div class="card-icon">🤖</div>
+        <h3>Agente de Mediações — Mercado Livre</h3>
+        <p class="card-desc">Agente de IA (Google Gemini) que gera 3 defesas estratégicas por disputa no ML, respeitando o limite de 320 caracteres. Histórico persistido em Firebase Firestore, fallback offline e templates para casos recorrentes.</p>
+        <div class="tag-row">
+          <span class="tag">React 19</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Google Gemini</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">Express</span>
+          <span class="tag">Tailwind CSS</span>
+        </div>
+        <span class="card-link">Ver repositório</span>
+      </a>
+
+      <a href="https://github.com/kauasilvadsantos/monitor-ordens-compra-tiny" target="_blank" class="card fade-in">
+        <div class="card-icon">📦</div>
+        <h3>Monitor de Ordens de Compra — ERP Tiny</h3>
+        <p class="card-desc">App desktop Python que monitora ordens de compra no ERP Tiny e alerta sobre entregas atrasadas (🔴) ou próximas do vencimento (🟡). OAuth2, renovação automática de token, paginação da API e modo --auto para agendamento diário.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span>
+          <span class="tag">Tkinter</span>
+          <span class="tag">OAuth2</span>
+          <span class="tag">Tiny API v3</span>
+          <span class="tag">PyInstaller</span>
+        </div>
+        <span class="card-link">Ver repositório</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background: linear-gradient(180deg, var(--bg) 0%, #0C0C14 100%);">
+  <div class="container">
+    <p class="s-label">Habilidades</p>
+    <h2>Stack técnica.</h2>
+    <div class="skills-grid">
+      <div class="sg fade-in">
+        <div class="sg-title">Linguagens</div>
+        <div class="sg-list">
+          <span class="sg-item">Python (pandas, openpyxl, Tkinter)</span>
+          <span class="sg-item">JavaScript / TypeScript</span>
+          <span class="sg-item">SQL (MySQL, Oracle)</span>
+          <span class="sg-item">VBA / Excel avançado</span>
+        </div>
+      </div>
+      <div class="sg fade-in">
+        <div class="sg-title">Automação</div>
+        <div class="sg-list">
+          <span class="sg-item">Chrome Extensions MV3</span>
+          <span class="sg-item">RPA & scripting</span>
+          <span class="sg-item">APIs REST (Tiny, ML, Shopee)</span>
+          <span class="sg-item">OAuth2 / autenticação</span>
+        </div>
+      </div>
+      <div class="sg fade-in">
+        <div class="sg-title">Dados & BI</div>
+        <div class="sg-list">
+          <span class="sg-item">Looker Studio</span>
+          <span class="sg-item">Google Sheets / Apps Script</span>
+          <span class="sg-item">MySQL & Oracle</span>
+          <span class="sg-item">Firebase Firestore</span>
+        </div>
+      </div>
+      <div class="sg fade-in">
+        <div class="sg-title">IA Generativa</div>
+        <div class="sg-list">
+          <span class="sg-item">Claude AI (Anthropic API)</span>
+          <span class="sg-item">Google Gemini API</span>
+          <span class="sg-item">Prompt engineering</span>
+          <span class="sg-item">Agentes autônomos</span>
+        </div>
+      </div>
+      <div class="sg fade-in">
+        <div class="sg-title">Frontend</div>
+        <div class="sg-list">
+          <span class="sg-item">React + Vite</span>
+          <span class="sg-item">Tailwind CSS</span>
+          <span class="sg-item">HTML / CSS</span>
+          <span class="sg-item">Node.js / Express</span>
+        </div>
+      </div>
+      <div class="sg fade-in">
+        <div class="sg-title">Formação</div>
+        <div class="sg-list">
+          <span class="sg-item">ADS — UNICID (2025–2027)</span>
+          <span class="sg-item">Banco de Dados Relacional</span>
+          <span class="sg-item">Modelagem de Dados</span>
+          <span class="sg-item">Estrutura de Dados</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container fade-in">
+    <p class="s-label">Contato</p>
+    <h2>Vamos conversar.</h2>
+    <p style="color:var(--muted);max-width:460px;margin:0 auto 1rem;font-size:.92rem;line-height:1.75;">Aberto a oportunidades em automação de processos, dados e BI. Respondo rápido.</p>
+    <div class="contact-links">
+      <a href="mailto:kauasantoscontact@gmail.com" class="btn btn-p">✉ kauasantoscontact@gmail.com</a>
+      <a href="https://linkedin.com/in/kaua-silva-santos" target="_blank" class="btn btn-g">LinkedIn →</a>
+      <a href="https://github.com/kauasilvadsantos" target="_blank" class="btn btn-g">GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span style="color:var(--accent)">kauã.dev</span> · feito com Python, TypeScript e café · São Paulo, SP
+</footer>
+
+<script>
+  ['l1','l2','l3','l4','l5','l6','l7'].forEach((id, i) => {
+    setTimeout(() => { const el = document.getElementById(id); if (el) el.style.opacity = '1'; }, 350 + i * 300);
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 3) * 0.08}s`;
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
