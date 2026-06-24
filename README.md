@@ -41,6 +41,17 @@ Agente de IA (Google Gemini) que gera defesas estratégicas para disputas no Mer
 
 ---
 
+### ⚙️ [Sincronizador de Dados Fiscais — ERP Tiny](https://github.com/kauasilvadsantos/sincronizador-fiscal-tiny)
+
+App desktop Python que lê uma planilha Excel e atualiza em massa NCM, CEST, origem, peso e dimensões de produtos no ERP Tiny via API. Suporte a API v2 e v3, modo dry-run, preservação de dados existentes (preço/nome), rate limiting automático e `EXECUTAR.bat` que instala tudo no Windows com duplo clique.
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Tkinter](https://img.shields.io/badge/Tkinter-GUI-blue?style=flat-square)
+![API REST](https://img.shields.io/badge/API_REST-Tiny_v2%2Fv3-orange?style=flat-square)
+![openpyxl](https://img.shields.io/badge/openpyxl-Excel-green?style=flat-square)
+
+---
+
 ### 📦 [Monitor de Ordens de Compra — ERP Tiny](https://github.com/kauasilvadsantos/monitor-ordens-compra-tiny)
 
 App desktop Python que monitora ordens de compra no ERP Tiny e alerta sobre entregas **atrasadas** (🔴) ou **próximas do vencimento** (🟡). Autenticação via OAuth2, renovação automática de token, paginação da API e modo `--auto` para agendamento diário. Build para `.exe` standalone com PyInstaller.
